@@ -74,9 +74,8 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
     public static final int MSG_PARAMETER_SETTING = 0x0310;
     public static final int MSG_SEND_TEXT_MESSAGE = 0x8300;
     public static final int MSG_REPORT_TEXT_MESSAGE = 0x6006;
-    public static final int MSG_LIGHT_ON = 0x8105;
-    public static final int MSG_LIGHT_OFF = 0x8105;
-    public static final int MSG_BUZZER_OFF = 0x8105;
+    public static final int MSG_LIGHT = 0x8105;
+    public static final int MSG_BUZZER = 0x8105;
 
     public static final int RESULT_SUCCESS = 0;
 
@@ -97,6 +96,19 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         } else {
             buf.writeShort(0);
         }
+        buf.writeBytes(data);
+        data.release();
+        buf.writeByte(Checksum.xor(buf.nioBuffer(1, buf.readableBytes() - 1)));
+        buf.writeByte(delimiter);
+        return buf;
+    }
+
+    public static ByteBuf formatMessage(int delimiter, int type, ByteBuf id, boolean shortIndex, ByteBuf data, boolean custom) {
+        ByteBuf buf = Unpooled.buffer();
+        buf.writeByte(delimiter);
+        buf.writeShort(type);
+        buf.writeShort(data.readableBytes());
+        buf.writeBytes(id);
         buf.writeBytes(data);
         data.release();
         buf.writeByte(Checksum.xor(buf.nioBuffer(1, buf.readableBytes() - 1)));

@@ -68,8 +68,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeInt(command.getInteger(Command.KEY_FREQUENCY));
                     return HuabaoProtocolDecoder.formatMessage(
                             0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
-                case Command.TYPE_ALARM_ARM:
-                case Command.TYPE_ALARM_DISARM:
+                case Command.TYPE_ALARM_ARM, Command.TYPE_ALARM_DISARM:
                     data.writeByte(1); // number of parameters
                     data.writeByte(0x24); // parameter id
                     String username = "user";
@@ -78,8 +77,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeCharSequence(username, StandardCharsets.US_ASCII);
                     return HuabaoProtocolDecoder.formatMessage(
                             0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
-                case Command.TYPE_ENGINE_STOP:
-                case Command.TYPE_ENGINE_RESUME:
+                case Command.TYPE_ENGINE_STOP, Command.TYPE_ENGINE_RESUME:
                     if (alternative) {
                         data.writeByte(command.getType().equals(Command.TYPE_ENGINE_STOP) ? 0x01 : 0x00);
                         data.writeBytes(time);
@@ -90,34 +88,20 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                         return HuabaoProtocolDecoder.formatMessage(
                                 0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, false, data);
                     }
-                case Command.TYPE_LIGHT_ON:
-                    data.writeByte(1); // number of parameters
-                    data.writeByte(0xa121); // parameter id
-                    data.writeByte(1); // parameter value length
-                    data.writeByte(0x01); // restart
+                case Command.TYPE_LIGHT_ON, Command.TYPE_LIGHT_OFF:
+                    data.writeByte(0x00); // parameter id
+                    data.writeByte(0xa1); // parameter id
+                    data.writeByte(0x21); // parameter id
+                    data.writeByte(command.getType().equals(Command.TYPE_LIGHT_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
-                case Command.TYPE_LIGHT_OFF:
-                    data.writeByte(1); // number of parameters
-                    data.writeByte(0xa121); // parameter id
-                    data.writeByte(1); // parameter value length
-                    data.writeByte(0x00); // restart
+                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, true, data, true);
+                case Command.TYPE_BUZZER_ON, Command.TYPE_BUZZER_OFF:
+                    data.writeByte(0x00); // parameter id
+                    data.writeByte(0xa1); // parameter id
+                    data.writeByte(0x22); // parameter id
+                    data.writeByte(command.getType().equals(Command.TYPE_BUZZER_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
-                case Command.TYPE_BUZZER_ON:
-                    data.writeByte(1); // number of parameters
-                    data.writeByte(0xa122); // parameter id
-                    data.writeByte(1); // parameter value length
-                    data.writeByte(0x01); // restart
-                    return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
-                case Command.TYPE_BUZZER_OFF:
-                    data.writeByte(1); // number of parameters
-                    data.writeByte(0xa122); // parameter id
-                    data.writeByte(1); // parameter value length
-                    data.writeByte(0x00); // restart
-                    return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                        0x7e, HuabaoProtocolDecoder.MSG_BUZZER, id, true, data, true);
                 default:
                     return null;
             }
