@@ -34,7 +34,13 @@ public class HuabaoProtocol extends BaseProtocol {
                 Command.TYPE_ALARM_ARM,
                 Command.TYPE_ALARM_DISARM,
                 Command.TYPE_ENGINE_STOP,
-                Command.TYPE_ENGINE_RESUME);
+                Command.TYPE_ENGINE_RESUME,
+                Command.TYPE_BUZZER_ON,
+                Command.TYPE_BUZZER_OFF,
+                Command.TYPE_BUZZER_DURATION,
+                Command.TYPE_LIGHT_ON,
+                Command.TYPE_LIGHT_OFF,
+                Command.TYPE_LIGHT_DURATION);
         addServer(new TrackerServer(config, getName(), false) {
             @Override
             protected void addProtocolHandlers(PipelineBuilder pipeline, Config config) {

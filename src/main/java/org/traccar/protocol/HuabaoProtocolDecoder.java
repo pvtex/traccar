@@ -74,6 +74,9 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
     public static final int MSG_PARAMETER_SETTING = 0x0310;
     public static final int MSG_SEND_TEXT_MESSAGE = 0x8300;
     public static final int MSG_REPORT_TEXT_MESSAGE = 0x6006;
+    public static final int MSG_LIGHT = 0x8105;
+    public static final int MSG_BUZZER = 0x8105;
+    public static final int MSG_PARAMETER = 0x0FA0;
 
     public static final int RESULT_SUCCESS = 0;
 
@@ -94,6 +97,19 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         } else {
             buf.writeShort(0);
         }
+        buf.writeBytes(data);
+        data.release();
+        buf.writeByte(Checksum.xor(buf.nioBuffer(1, buf.readableBytes() - 1)));
+        buf.writeByte(delimiter);
+        return buf;
+    }
+
+    public static ByteBuf formatMessage(int delimiter, int type, ByteBuf id, ByteBuf data, boolean custom) {
+        ByteBuf buf = Unpooled.buffer();
+        buf.writeByte(delimiter);
+        buf.writeShort(type);
+        buf.writeShort(data.readableBytes());
+        buf.writeBytes(id);
         buf.writeBytes(data);
         data.release();
         buf.writeByte(Checksum.xor(buf.nioBuffer(1, buf.readableBytes() - 1)));
@@ -289,6 +305,26 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             sendGeneralResponse(channel, remoteAddress, id, type, index);
 
             return decodeLocationBatch(deviceSession, buf, type);
+
+        } else if (type == MSG_PARAMETER) {
+
+            /*  
+            sound switch 1
+            light switch 1
+            Position.KEY_STEPS 4
+            Position.KEY_BATTERY_LEVEL 1  0x64 Corresponds to 100%
+            Position.KEY_CHARGE 1
+            */
+            Position position = new Position(getProtocolName());
+            position.setDeviceId(deviceSession.getDeviceId());
+            getLastLocation(position, null);
+
+            buf.skipBytes(4);
+            position.set(Position.KEY_STEPS, buf.readInt());
+            position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
+            position.set(Position.KEY_CHARGE, buf.readUnsignedByte() != 0);
+
+            return position;
 
         } else if (type == MSG_TIME_SYNC_REQUEST) {
 
@@ -622,8 +658,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
                 case 0xD3:
                     position.set(Position.KEY_POWER, buf.readUnsignedShort() * 0.1);
                     break;
-                case 0xD4:
-                case 0xE1:
+                case 0xD4, 0xE1:
                     if (length == 1) {
                         position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
                     } else {
@@ -719,8 +754,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
                                             buf.readUnsignedShort(), buf.readUnsignedByte(),
                                             buf.readUnsignedShort(), buf.readUnsignedInt()));
                                     break;
-                                case 0x00A8:
-                                case 0x00E1:
+                                case 0x00A8, 0x00E1:
                                     position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
                                     break;
                                 default:
