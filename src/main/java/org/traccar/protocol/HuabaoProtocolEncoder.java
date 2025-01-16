@@ -99,7 +99,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x23); // parameter id
-                    data.writeByte(2); // parameter value length
+                    data.writeByte(0x00); // parameter value length
                     data.writeInt(command.getInteger(Command.KEY_DURATION));
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, false, data, true);
@@ -114,7 +114,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x24); // parameter id
-                    data.writeByte(2); // parameter value length
+                    data.writeByte(0x00); // parameter value length
                     data.writeInt(command.getInteger(Command.KEY_DURATION));
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, false, data, true);
