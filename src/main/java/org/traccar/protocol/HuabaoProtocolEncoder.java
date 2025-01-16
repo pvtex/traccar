@@ -90,6 +90,34 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                         return HuabaoProtocolDecoder.formatMessage(
                                 0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, false, data);
                     }
+                case Command.TYPE_LIGHT_ON:
+                    data.writeByte(1); // number of parameters
+                    data.writeByte(0xa121); // parameter id
+                    data.writeByte(1); // parameter value length
+                    data.writeByte(0x01); // restart
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                case Command.TYPE_LIGHT_OFF:
+                    data.writeByte(1); // number of parameters
+                    data.writeByte(0xa121); // parameter id
+                    data.writeByte(1); // parameter value length
+                    data.writeByte(0x00); // restart
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                case Command.TYPE_BUZZER_ON:
+                    data.writeByte(1); // number of parameters
+                    data.writeByte(0xa122); // parameter id
+                    data.writeByte(1); // parameter value length
+                    data.writeByte(0x01); // restart
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                case Command.TYPE_BUZZER_OFF:
+                    data.writeByte(1); // number of parameters
+                    data.writeByte(0xa122); // parameter id
+                    data.writeByte(1); // parameter value length
+                    data.writeByte(0x00); // restart
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
                 default:
                     return null;
             }
