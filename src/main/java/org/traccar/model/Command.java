@@ -72,8 +72,10 @@ public class Command extends BaseCommand {
 
     public static final String TYPE_LIGHT_ON = "lightOn";
     public static final String TYPE_LIGHT_OFF = "lightOff";
+    public static final String TYPE_LIGHT_DURATION = "lightDuration";
     public static final String TYPE_BUZZER_ON = "buzzerOn";
     public static final String TYPE_BUZZER_OFF = "buzzerOff";
+    public static final String TYPE_BUZZER_DURATION = "buzzerDuration";
 
     public static final String KEY_UNIQUE_ID = "uniqueId";
     public static final String KEY_FREQUENCY = "frequency";
@@ -88,6 +90,7 @@ public class Command extends BaseCommand {
     public static final String KEY_PHONE = "phone";
     public static final String KEY_SERVER = "server";
     public static final String KEY_PORT = "port";
+    public static final String KEY_DURATION = "duration";
 
     @QueryIgnore
     @Override
