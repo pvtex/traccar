@@ -94,7 +94,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(0x21); // parameter id
                     data.writeByte(command.getType().equals(Command.TYPE_LIGHT_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, true, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, data, true);
                 case Command.TYPE_LIGHT_DURATION:
                     data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
@@ -102,14 +102,14 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(0x00); // parameter value length
                     data.writeShort(command.getInteger(Command.KEY_DURATION));
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, false, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, data, true);
                 case Command.TYPE_BUZZER_ON, Command.TYPE_BUZZER_OFF:
                     data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x22); // parameter id
                     data.writeByte(command.getType().equals(Command.TYPE_BUZZER_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_BUZZER, id, true, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_BUZZER, id, data, true);
                 case Command.TYPE_BUZZER_DURATION:
                     data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
@@ -117,7 +117,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(0x00); // parameter value length
                     data.writeShort(command.getInteger(Command.KEY_DURATION));
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, false, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, data, true);
                 default:
                     return null;
             }
