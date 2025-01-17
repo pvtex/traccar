@@ -317,6 +317,8 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             */
             Position position = new Position(getProtocolName());
             position.setDeviceId(deviceSession.getDeviceId());
+            getLastLocation(position, null);
+            
             index = buf.readUnsignedByte();
             index = buf.readUnsignedByte();
             index = buf.readUnsignedByte();
