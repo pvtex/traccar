@@ -322,7 +322,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             buf.skipBytes(4);
             position.set(Position.KEY_STEPS, buf.readInt());
             buf.skipBytes(1);
-            position.set(Position.KEY_CHARGE, buf.readUnsignedByte());
+            position.set(Position.KEY_CHARGE, (buf.readUnsignedByte() == 0x01 ? true : false));
 
             return position;
 
