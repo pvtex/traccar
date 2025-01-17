@@ -318,13 +318,10 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             Position position = new Position(getProtocolName());
             position.setDeviceId(deviceSession.getDeviceId());
             getLastLocation(position, null);
-            
-            index = buf.readUnsignedByte();
-            index = buf.readUnsignedByte();
-            index = buf.readUnsignedByte();
-            index = buf.readUnsignedByte();
+
+            buf.skipBytes(4);
             position.set(Position.KEY_STEPS, buf.readInt());
-            index = buf.readUnsignedByte();
+            buf.skipBytes(1);
             position.set(Position.KEY_CHARGE, buf.readUnsignedByte());
 
             return position;
@@ -758,9 +755,12 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
                                             buf.readUnsignedShort(), buf.readUnsignedByte(),
                                             buf.readUnsignedShort(), buf.readUnsignedInt()));
                                     break;
-                                case 0x00A8:
-                                case 0x00E1:
+                                case 0x00A8, 0x00E1:
                                     position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
+                                    break;
+                                case 0x009F:
+                                    stringValue = buf.readCharSequence(length, StandardCharsets.US_ASCII).toString();
+                                    position.set("network", stringValue);
                                     break;
                                 default:
                                     buf.skipBytes(extendedLength - 2);
