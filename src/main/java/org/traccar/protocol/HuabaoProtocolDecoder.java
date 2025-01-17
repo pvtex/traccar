@@ -307,16 +307,13 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             return decodeLocationBatch(deviceSession, buf, type);
 
         } else if (type == MSG_PARAMETER) {
+
             /*  
             sound switch 1
             light switch 1
             Position.KEY_STEPS 4
             Position.KEY_BATTERY_LEVEL 1  0x64 Corresponds to 100%
             Position.KEY_CHARGE 1
-
-            delimiter = buf.readUnsignedByte();
-            int type = buf.readUnsignedShort();
-            v
             */
             Position position = new Position(getProtocolName());
             position.setDeviceId(deviceSession.getDeviceId());
@@ -327,6 +324,8 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_STEPS, buf.readInt());
             index = buf.readUnsignedByte();
             position.set(Position.KEY_CHARGE, buf.readUnsignedByte());
+
+            return position;
 
         } else if (type == MSG_TIME_SYNC_REQUEST) {
 
