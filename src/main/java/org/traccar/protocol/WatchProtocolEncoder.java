@@ -154,6 +154,7 @@ public class WatchProtocolEncoder extends StringProtocolEncoder implements Strin
             case Command.TYPE_SET_TIMEZONE ->
                     formatTextCommand(channel, command, "LZ,%s,%s", Command.KEY_LANGUAGE, Command.KEY_TIMEZONE);
             case Command.TYPE_SET_INDICATOR -> formatTextCommand(channel, command, "FLOWER,%s", Command.KEY_DATA);
+            case Command.TYPE_STATUS_LED -> formatTextCommand(channel, command, "LED,%s", Command.KEY_ENABLE);
             default -> null;
         };
     }

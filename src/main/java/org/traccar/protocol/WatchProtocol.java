@@ -43,7 +43,8 @@ public class WatchProtocol extends BaseProtocol {
                 Command.TYPE_MESSAGE,
                 Command.TYPE_VOICE_MESSAGE,
                 Command.TYPE_SET_TIMEZONE,
-                Command.TYPE_SET_INDICATOR);
+                Command.TYPE_SET_INDICATOR,
+                Command.TYPE_STATUS_LED);
         addServer(new TrackerServer(config, getName(), false) {
             @Override
             protected void addProtocolHandlers(PipelineBuilder pipeline, Config config) {
