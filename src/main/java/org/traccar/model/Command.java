@@ -77,6 +77,8 @@ public class Command extends BaseCommand {
     public static final String TYPE_BUZZER_OFF = "buzzerOff";
     public static final String TYPE_BUZZER_DURATION = "buzzerDuration";
     public static final String TYPE_STATUS_LED = "statusLed";
+    public static final String TYPE_HEARTBEAT = "heartbeat";
+    public static final String TYPE_STATIC = "static";
 
     public static final String KEY_UNIQUE_ID = "uniqueId";
     public static final String KEY_FREQUENCY = "frequency";
