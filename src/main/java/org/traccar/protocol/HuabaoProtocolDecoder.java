@@ -809,7 +809,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
                     while (buf.readerIndex() < endIndex) {
                         String mac = ByteBufUtil.hexDump(buf.readSlice(6)).replaceAll("(..)", "$1:");
                         network.addWifiAccessPoint(WifiAccessPoint.from(
-                                mac.substring(0, mac.length() - 1), buf.readByte()));
+                            mac.substring(0, mac.length() - 1), buf.readByte()));
                     }
                     break;
                 case 0xF6:
