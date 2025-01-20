@@ -305,16 +305,9 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             sendGeneralResponse(channel, remoteAddress, id, type, index);
 
             return decodeLocationBatch(deviceSession, buf, type);
-            
+
         } else if (type == MSG_PARAMETER) {
 
-            /*  
-             * sound switch 1
-             * light switch 1
-             * Position.KEY_STEPS 4
-             * Position.KEY_BATTERY_LEVEL 1  0x64 Corresponds to 100%
-             * Position.KEY_CHARGE 1
-             */
             Position position = new Position(getProtocolName());
             position.setDeviceId(deviceSession.getDeviceId());
             getLastLocation(position, null);
