@@ -23,6 +23,20 @@ public final class Keys {
     }
 
     /**
+     * Username (eMail) of admin user for triggering livemode activationd and deactivation
+     */
+    public static final ConfigKey<String> LIVEMODE_USERNAME = new StringConfigKey(
+            "livemode.username",
+            List.of(KeyType.CONFIG));
+
+    /**
+     * Password of admin user for triggering livemode activationd and deactivation
+     */
+    public static final ConfigKey<String> LIVEMODE_PASSWORD = new StringConfigKey(
+            "livemode.password",
+            List.of(KeyType.CONFIG));
+
+    /**
      * Network interface for the protocol. If not specified, server will bind all interfaces.
      */
     public static final ConfigSuffix<String> PROTOCOL_ADDRESS = new StringConfigSuffix(

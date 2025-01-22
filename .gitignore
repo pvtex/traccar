@@ -10,5 +10,4 @@ nbactions.xml
 .gradle
 out
 build
-.vscode
 bin

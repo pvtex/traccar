@@ -80,6 +80,8 @@ public class Command extends BaseCommand {
     public static final String TYPE_HEARTBEAT = "heartbeat";
     public static final String TYPE_STATIC = "static";
     public static final String TYPE_TK_WORKMODE = "tkWorkMode";
+    public static final String TYPE_LIVEMODE_ON = "liveModeOn";
+    public static final String TYPE_LIVEMODE_OFF = "liveModeOff";
 
     public static final String KEY_UNIQUE_ID = "uniqueId";
     public static final String KEY_FREQUENCY = "frequency";
@@ -95,6 +97,7 @@ public class Command extends BaseCommand {
     public static final String KEY_SERVER = "server";
     public static final String KEY_PORT = "port";
     public static final String KEY_DURATION = "duration";
+    public static final String KEY_TK_WORKMODE = "tkWorkMode";
 
     @QueryIgnore
     @Override

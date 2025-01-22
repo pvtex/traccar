@@ -46,6 +46,8 @@ public class WatchProtocol extends BaseProtocol {
                 Command.TYPE_SET_INDICATOR,
                 Command.TYPE_STATUS_LED,
                 Command.TYPE_TK_WORKMODE,
+                Command.TYPE_LIVEMODE_ON,
+                Command.TYPE_LIVEMODE_OFF);
         addServer(new TrackerServer(config, getName(), false) {
             @Override
             protected void addProtocolHandlers(PipelineBuilder pipeline, Config config) {

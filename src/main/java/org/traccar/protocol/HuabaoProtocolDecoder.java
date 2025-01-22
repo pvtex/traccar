@@ -71,11 +71,9 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
     public static final int MSG_TIME_SYNC_RESPONSE = 0x8109;
     public static final int MSG_PHOTO = 0x8888;
     public static final int MSG_TRANSPARENT = 0x0900;
-    public static final int MSG_PARAMETER_SETTING = 0x0310;
+    public static final int MSG_PARAMETER_SETTING = 0x8103; //0x0310;
     public static final int MSG_SEND_TEXT_MESSAGE = 0x8300;
     public static final int MSG_REPORT_TEXT_MESSAGE = 0x6006;
-    public static final int MSG_LIGHT = 0x8105;
-    public static final int MSG_BUZZER = 0x8105;
     public static final int MSG_PARAMETER = 0x0FA0;
 
     public static final int RESULT_SUCCESS = 0;
@@ -110,6 +108,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         buf.writeShort(type);
         buf.writeShort(data.readableBytes());
         buf.writeBytes(id);
+        buf.writeByte(0x00);
         buf.writeBytes(data);
         data.release();
         buf.writeByte(Checksum.xor(buf.nioBuffer(1, buf.readableBytes() - 1)));
@@ -313,7 +312,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             getLastLocation(position, null);
 
             buf.skipBytes(4);
-            position.set(Position.KEY_STEPS, buf.readInt());
+            position.set(Position.KEY_STEPS, buf.readShort());
             position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
             position.set(Position.KEY_CHARGE, buf.readUnsignedByte() != 0);
 

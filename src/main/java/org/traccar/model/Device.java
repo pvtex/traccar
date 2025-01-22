@@ -20,9 +20,30 @@ import org.traccar.storage.QueryIgnore;
 import org.traccar.storage.StorageName;
 
 import java.util.Date;
+import java.util.Calendar;
 
 @StorageName("tc_devices")
 public class Device extends GroupedModel implements Disableable, Schedulable {
+
+    private Date livemodetime;
+
+    public Date getLiveModetime() {
+        if (livemodetime == null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, 2000);
+            calendar.set(Calendar.MONTH, Calendar.JANUARY);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            calendar.set(Calendar.HOUR_OF_DAY, 1);
+            calendar.set(Calendar.MINUTE, 1);
+            calendar.set(Calendar.SECOND, 1);
+            livemodetime = calendar.getTime();
+        }
+        return livemodetime;
+    }
+
+    public void setLiveModetime(Date sqlTimestamp) {
+        this.livemodetime = sqlTimestamp;
+    }
 
     private long calendarId;
 

@@ -54,7 +54,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                         var charset = Charset.isSupported("GBK") ? Charset.forName("GBK") : StandardCharsets.US_ASCII;
                         data.writeCharSequence(command.getString(Command.KEY_DATA), charset);
                         return HuabaoProtocolDecoder.formatMessage(
-                                0x7e, HuabaoProtocolDecoder.MSG_SEND_TEXT_MESSAGE, id, false, data);
+                            0x7e, HuabaoProtocolDecoder.MSG_SEND_TEXT_MESSAGE, id, false, data);
                     } else {
                         return Unpooled.wrappedBuffer(DataConverter.parseHex(command.getString(Command.KEY_DATA)));
                     }
@@ -64,14 +64,18 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(1); // parameter value length
                     data.writeByte(0x03); // restart
                     return HuabaoProtocolDecoder.formatMessage(
-                            0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
                 case Command.TYPE_POSITION_PERIODIC:
-                    data.writeByte(1); // number of parameters
-                    data.writeByte(0x06); // parameter id
+                    data.writeByte(0xa9);
+                    data.writeByte(1);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x22);
                     data.writeByte(4); // parameter value length
                     data.writeInt(command.getInteger(Command.KEY_FREQUENCY));
                     return HuabaoProtocolDecoder.formatMessage(
-                            0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_ALARM_ARM, Command.TYPE_ALARM_DISARM:
                     data.writeByte(1); // number of parameters
                     data.writeByte(0x24); // parameter id
@@ -80,48 +84,66 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeByte(command.getType().equals(Command.TYPE_ALARM_ARM) ? 0x01 : 0x00);
                     data.writeCharSequence(username, StandardCharsets.US_ASCII);
                     return HuabaoProtocolDecoder.formatMessage(
-                            0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
                 case Command.TYPE_ENGINE_STOP, Command.TYPE_ENGINE_RESUME:
                     if (alternative) {
                         data.writeByte(command.getType().equals(Command.TYPE_ENGINE_STOP) ? 0x01 : 0x00);
                         data.writeBytes(time);
                         return HuabaoProtocolDecoder.formatMessage(
-                                0x7e, HuabaoProtocolDecoder.MSG_OIL_CONTROL, id, false, data);
+                            0x7e, HuabaoProtocolDecoder.MSG_OIL_CONTROL, id, false, data);
                     } else {
                         data.writeByte(command.getType().equals(Command.TYPE_ENGINE_STOP) ? 0xf0 : 0xf1);
                         return HuabaoProtocolDecoder.formatMessage(
-                                0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, false, data);
+                            0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, false, data);
                     }
                 case Command.TYPE_LIGHT_ON, Command.TYPE_LIGHT_OFF:
-                    data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x21); // parameter id
                     data.writeByte(command.getType().equals(Command.TYPE_LIGHT_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_LIGHT_DURATION:
-                    data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x23); // parameter id
                     data.writeByte(0x00); // parameter value length
                     data.writeShort(command.getInteger(Command.KEY_DURATION));
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_BUZZER_ON, Command.TYPE_BUZZER_OFF:
-                    data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x22); // parameter id
                     data.writeByte(command.getType().equals(Command.TYPE_BUZZER_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_BUZZER, id, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_BUZZER_DURATION:
-                    data.writeByte(0x00); // parameter id
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x24); // parameter id
                     data.writeByte(0x00); // parameter value length
                     data.writeShort(command.getInteger(Command.KEY_DURATION));
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_LIGHT, id, data, true);
+                        0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
+                case Command.TYPE_LIVEMODE_ON:
+                    data.writeByte(0xa9);
+                    data.writeByte(1);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x22);
+                    data.writeByte(4); // parameter value length
+                    data.writeInt(2); // 2s interval
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
+                case Command.TYPE_LIVEMODE_OFF:
+                    data.writeByte(0xa9);
+                    data.writeByte(1);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x22);
+                    data.writeByte(4); // parameter value length
+                    data.writeInt(60); // 60s interval
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 default:
                     return null;
             }

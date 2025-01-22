@@ -40,7 +40,9 @@ public class HuabaoProtocol extends BaseProtocol {
                 Command.TYPE_BUZZER_DURATION,
                 Command.TYPE_LIGHT_ON,
                 Command.TYPE_LIGHT_OFF,
-                Command.TYPE_LIGHT_DURATION);
+                Command.TYPE_LIGHT_DURATION,
+                Command.TYPE_LIVEMODE_ON,
+                Command.TYPE_LIVEMODE_OFF);
         addServer(new TrackerServer(config, getName(), false) {
             @Override
             protected void addProtocolHandlers(PipelineBuilder pipeline, Config config) {

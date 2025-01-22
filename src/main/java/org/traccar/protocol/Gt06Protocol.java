@@ -37,7 +37,9 @@ public class Gt06Protocol extends BaseProtocol {
                 Command.TYPE_BUZZER_ON,
                 Command.TYPE_BUZZER_OFF,
                 Command.TYPE_STATIC,
-                Command.TYPE_CUSTOM);
+                Command.TYPE_CUSTOM,
+                Command.TYPE_LIVEMODE_ON,
+                Command.TYPE_LIVEMODE_OFF);
         addServer(new TrackerServer(config, getName(), false) {
             @Override
             protected void addProtocolHandlers(PipelineBuilder pipeline, Config config) {
