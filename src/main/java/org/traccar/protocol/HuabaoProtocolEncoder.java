@@ -151,5 +151,4 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
             id.release();
         }
     }
-
 }
