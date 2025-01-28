@@ -28,6 +28,7 @@ public class Command extends BaseCommand {
     public static final String TYPE_IDENTIFICATION = "deviceIdentification";
     public static final String TYPE_POSITION_SINGLE = "positionSingle";
     public static final String TYPE_POSITION_PERIODIC = "positionPeriodic";
+    public static final String TYPE_POSITION_PERIODIC_STATIC = "positionPeriodicStatic";
     public static final String TYPE_POSITION_STOP = "positionStop";
     public static final String TYPE_ENGINE_STOP = "engineStop";
     public static final String TYPE_ENGINE_RESUME = "engineResume";

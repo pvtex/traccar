@@ -76,6 +76,17 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     data.writeInt(command.getInteger(Command.KEY_FREQUENCY));
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
+                case Command.TYPE_POSITION_PERIODIC_STATIC:
+                    data.writeByte(0xa9);
+                    data.writeByte(1);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x00);
+                    data.writeByte(0x27);
+                    data.writeByte(4); // parameter value length
+                    data.writeInt(command.getInteger(Command.KEY_FREQUENCY));
+                    return HuabaoProtocolDecoder.formatMessage(
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_ALARM_ARM, Command.TYPE_ALARM_DISARM:
                     data.writeByte(1); // number of parameters
                     data.writeByte(0x24); // parameter id

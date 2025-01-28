@@ -31,6 +31,7 @@ public class HuabaoProtocol extends BaseProtocol {
                 Command.TYPE_CUSTOM,
                 Command.TYPE_REBOOT_DEVICE,
                 Command.TYPE_POSITION_PERIODIC,
+                Command.TYPE_POSITION_PERIODIC_STATIC,
                 Command.TYPE_ALARM_ARM,
                 Command.TYPE_ALARM_DISARM,
                 Command.TYPE_ENGINE_STOP,
