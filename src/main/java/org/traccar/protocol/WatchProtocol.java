@@ -46,12 +46,6 @@ public class WatchProtocol extends BaseProtocol {
                 Command.TYPE_SET_INDICATOR,
                 Command.TYPE_STATUS_LED,
                 Command.TYPE_TK_WORKMODE,
-                Command.TYPE_BUZZER_ON,
-                Command.TYPE_BUZZER_OFF,
-                Command.TYPE_BUZZER_DURATION,
-                Command.TYPE_LIGHT_ON,
-                Command.TYPE_LIGHT_OFF,
-                Command.TYPE_LIGHT_DURATION,
                 Command.TYPE_LIVEMODE_ON,
                 Command.TYPE_LIVEMODE_OFF);
         addServer(new TrackerServer(config, getName(), false) {
