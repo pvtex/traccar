@@ -1964,7 +1964,7 @@ public final class Keys {
     public static final ConfigKey<String> LOGGER_ATTRIBUTES = new StringConfigKey(
             "logger.attributes",
             List.of(KeyType.CONFIG),
-            "time,position,speed,course,accuracy,result");
+            "time,position,speed,course,accuracy,result,batteryLevel");
 
     /**
      * Broadcast method. Available options are "multicast" and "redis". By default, (if the value is not

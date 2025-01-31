@@ -73,6 +73,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                             0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING_ORIG, id, false, data);
                 case Command.TYPE_POSITION_PERIODIC:
+                    data.writeByte(0x00);
                     data.writeByte(0xa9);
                     data.writeByte(1);
                     data.writeByte(0x00);
@@ -84,6 +85,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_POSITION_PERIODIC_STATIC:
+                    data.writeByte(0x00);
                     data.writeByte(0xa9);
                     data.writeByte(1);
                     data.writeByte(0x00);
@@ -95,13 +97,14 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_SET_APN:
-                    data.writeByte(0xa9);
+                    //data.writeByte(0x00);
                     data.writeByte(1);
-                    data.writeByte(0x00);
-                    data.writeByte(0x00);
+                    //data.writeByte(0x00);
+                    //data.writeByte(0x00);
                     data.writeByte(0x00);
                     data.writeByte(0x10);
-                    data.writeByte(2); // parameter value length
+                    //data.writeByte(2); // parameter value length
+                    data.writeByte(command.getString(Command.KEY_DATA).length()); // parameter value length
                     var charset = Charset.isSupported("GBK") ? Charset.forName("GBK") : StandardCharsets.US_ASCII;
                     data.writeCharSequence(command.getString(Command.KEY_DATA), charset);
                     return HuabaoProtocolDecoder.formatMessage(
@@ -127,12 +130,14 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                             0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, false, data);
                     }
                 case Command.TYPE_LIGHT_ON, Command.TYPE_LIGHT_OFF:
+                    data.writeByte(0x00);
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x21); // parameter id
                     data.writeByte(command.getType().equals(Command.TYPE_LIGHT_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_LIGHT_DURATION:
+                    data.writeByte(0x00);
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x23); // parameter id
                     data.writeByte(0x00); // parameter value length
@@ -140,12 +145,14 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_BUZZER_ON, Command.TYPE_BUZZER_OFF:
+                    data.writeByte(0x00);
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x22); // parameter id
                     data.writeByte(command.getType().equals(Command.TYPE_BUZZER_ON) ? 0x01 : 0x00);
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_BUZZER_DURATION:
+                    data.writeByte(0x00);
                     data.writeByte(0xa1); // parameter id
                     data.writeByte(0x24); // parameter id
                     data.writeByte(0x00); // parameter value length
@@ -153,6 +160,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_TERMINAL_CONTROL, id, data, true);
                 case Command.TYPE_LIVEMODE_ON:
+                    data.writeByte(0x00);
                     data.writeByte(0xa9);
                     data.writeByte(1);
                     data.writeByte(0x00);
@@ -164,6 +172,7 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_LIVEMODE_OFF:
+                    data.writeByte(0x00);
                     data.writeByte(0xa9);
                     data.writeByte(1);
                     data.writeByte(0x00);
