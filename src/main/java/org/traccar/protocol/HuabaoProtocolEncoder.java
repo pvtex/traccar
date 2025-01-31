@@ -60,11 +60,12 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     }
                 case Command.TYPE_REBOOT_DEVICE:
                     data.writeByte(1); // number of parameters
+                    data.writeByte(0x00);
                     data.writeByte(0x23); // parameter id
                     data.writeByte(1); // parameter value length
                     data.writeByte(0x03); // restart
                     return HuabaoProtocolDecoder.formatMessage(
-                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, false, data);
+                        0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_POSITION_PERIODIC_ORIG:
                     data.writeByte(1); // number of parameters
                     data.writeByte(0x06); // parameter id
@@ -73,23 +74,23 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
                     return HuabaoProtocolDecoder.formatMessage(
                             0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING_ORIG, id, false, data);
                 case Command.TYPE_POSITION_PERIODIC:
-                    data.writeByte(0x00);
-                    data.writeByte(0xa9);
+                    //data.writeByte(0x00);
+                    //data.writeByte(0xa9);
                     data.writeByte(1);
+                    //data.writeByte(0x00);
+                    //data.writeByte(0x00);
                     data.writeByte(0x00);
-                    data.writeByte(0x00);
-                    data.writeByte(0x00);
-                    data.writeByte(0x22);
+                    data.writeByte(0x29); //22
                     data.writeByte(4); // parameter value length
                     data.writeInt(command.getInteger(Command.KEY_FREQUENCY));
                     return HuabaoProtocolDecoder.formatMessage(
                         0x7e, HuabaoProtocolDecoder.MSG_PARAMETER_SETTING, id, data, true);
                 case Command.TYPE_POSITION_PERIODIC_STATIC:
-                    data.writeByte(0x00);
-                    data.writeByte(0xa9);
+                    //data.writeByte(0x00);
+                    //data.writeByte(0xa9);
                     data.writeByte(1);
-                    data.writeByte(0x00);
-                    data.writeByte(0x00);
+                    //data.writeByte(0x00);
+                    //data.writeByte(0x00);
                     data.writeByte(0x00);
                     data.writeByte(0x27);
                     data.writeByte(4); // parameter value length

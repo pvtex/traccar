@@ -175,6 +175,14 @@ public class WatchProtocolEncoder extends StringProtocolEncoder implements Strin
                 return formatTextCommand(channel, command, "UPLOAD,2");
             case Command.TYPE_LIVEMODE_OFF:
                 return formatTextCommand(channel, command, "UPLOAD,60");
+            case Command.TYPE_LIGHT_ON:
+                return formatTextCommand(channel, command, "LED,1");
+            case Command.TYPE_LIGHT_OFF:
+                return formatTextCommand(channel, command, "LED,0");
+            case Command.TYPE_BUZZER_ON:
+                return formatTextCommand(channel, command, "SND,1");
+            case Command.TYPE_BUZZER_OFF:
+                return formatTextCommand(channel, command, "SND,0");
             default:
                 return null;
         }
